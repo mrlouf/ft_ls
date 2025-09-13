@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/13 09:40:07 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/13 10:08:08 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int main(int argc, char **argv)
 {
     (void)argc;
-    (void)argv;
-
-    ft_printf("Hello, ft_ls!\n");
+    print_array(argv);
 
     return (0);
 }
