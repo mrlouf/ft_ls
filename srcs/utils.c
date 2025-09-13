@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/13 12:21:07 by nponchon         ###   ########.fr       */
+/*   Created: 2025/09/13 12:02:14 by nponchon          #+#    #+#             */
+/*   Updated: 2025/09/13 12:20:37 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_ls.h"
 
-int main(int argc, char **argv)
+void    ls_print_dir(DIR *dir)
 {
-    (void)argc;
-    print_array(argv);
-
-    ls_parse_options(argc, argv);
-    ls_get_dirs(argc, argv);
-
-    return (0);
+    struct dirent *entry;
+    entry = readdir(dir);
+    while (entry)
+    {
+        ft_printf("%s\n", entry->d_name);
+        entry = readdir(dir);
+    }
 }

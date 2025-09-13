@@ -1,24 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/13 12:21:07 by nponchon         ###   ########.fr       */
+/*   Created: 2025/09/13 12:22:22 by nponchon          #+#    #+#             */
+/*   Updated: 2025/09/13 12:31:05 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_ls.h"
 
-int main(int argc, char **argv)
-{
-    (void)argc;
-    print_array(argv);
-
-    ls_parse_options(argc, argv);
-    ls_get_dirs(argc, argv);
-
-    return (0);
-}
+// Placeholder for error handling functions

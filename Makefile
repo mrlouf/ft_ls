@@ -8,7 +8,11 @@ SRC			= 	.
 
 # -=-=-=-=-    FILES -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #
 
-SRC			=	main.c
+SRC			=	main.c			\
+				parse.c			\
+				directories.c	\
+				errors.c		\
+				utils.c
 
 SRCDIR		= srcs
 SRCS		= $(addprefix $(SRCDIR)/, $(SRC))
