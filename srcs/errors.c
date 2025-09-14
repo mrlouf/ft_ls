@@ -12,4 +12,11 @@
 
 #include "../incs/ft_ls.h"
 
-// Placeholder for error handling functions
+void    ls_exit(t_ls *ls, int code, char *message)
+{
+    if (message)
+        ft_printf("Error: %s\n", message);
+    if (ls)
+        free(ls);
+    exit(code);
+}

@@ -18,7 +18,12 @@ void    ls_print_dir(DIR *dir)
     entry = readdir(dir);
     while (entry)
     {
-        ft_printf("%s\n", entry->d_name);
+        if (ft_strncmp(entry->d_name, ".", 1) == 0)
+        {
+            entry = readdir(dir);
+            continue ;
+        }
+            ft_printf("%s\t", entry->d_name);
         entry = readdir(dir);
     }
 }

@@ -31,17 +31,26 @@ In the glibc implementation, the dirent structure is defined as follows:
     };
 */
 
-// Linked list to store directory entries (especially useful for the -R option and sorting)
-typedef struct s_elem
+typedef struct s_ls
 {
-    struct dirent      *entry;
-    struct s_elem      *next;
-}                       t_elem;
+    char                **args;
+
+    // Flags
+    int                 flag_all; // -a
+    int                 flag_list; // -l
+    int                 flag_reverse; // -r
+    int                 flag_recursive; // -R
+    int                 flag_time; // -t
+
+    struct s_list       *dirs;  // Store all directories to display
+}                       t_ls;
 
 // Function prototypes
-void    ls_parse_options(int argc, char **argv);
-void    ls_get_dirs(int argc, char **argv);
+void    ls_parse_options(t_ls **ls);
+void    ls_get_dirs(t_ls **ls);
 
 void    ls_print_dir(DIR *dir);
+
+void    ls_exit(t_ls *ls, int code, char *message);
 
 #endif

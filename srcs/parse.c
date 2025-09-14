@@ -10,10 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void    ls_parse_options(int argc, char **argv)
+void    ls_parse_options(int ac, char **av)
 {
-    if (argc < 2)
+    if (ac < 2)
         return ;
-    argv++;
+    av++;
+
+    while (*av && **av == '-')
+    {
+        if (!(*av)[1])
+            break ;
+        av++;
+    }
     
 }

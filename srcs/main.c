@@ -12,13 +12,35 @@
 
 #include "../incs/ft_ls.h"
 
-int main(int argc, char **argv)
+static void ls_init(t_ls **ls, char **av)
 {
-    (void)argc;
-    print_array(argv);
+    (*ls)->args = ++av;
 
-    ls_parse_options(argc, argv);
-    ls_get_dirs(argc, argv);
+    // Initialize flags to 0
+    (*ls)->flag_all = 0;
+    (*ls)->flag_list = 0;
+    (*ls)->flag_reverse = 0;
+    (*ls)->flag_recursive = 0;
+    (*ls)->flag_time = 0;
+
+    (*ls)->dirs = NULL;
+}
+
+int main(int ac, char **av)
+{
+    (void)ac;
+    print_array(av); // DEBUG: print the arguments received
+
+    t_ls *ls = malloc(sizeof(t_ls));
+    if (!ls)
+        ls_exit(ls, 1, "Memory allocation failed");
+
+    ls_init(&ls, av);
+    ls_parse_options(&ls);
+
+    ls_get_dirs(&ls);
+
+    free(ls);
 
     return (0);
 }

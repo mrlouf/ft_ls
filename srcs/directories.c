@@ -12,10 +12,45 @@
 
 #include "../incs/ft_ls.h"
 
-void    ls_get_dirs(int argc, char **argv)
+void    ls_get_dirs(t_ls **ls)
 {
-    (void)argc;
-    (void)argv;
+/*     if ((*ls)->args == NULL)
+        ls_get_current_dir(ls); */
 
-    return ;
+    DIR *dir = opendir(".");
+    if (!dir)
+    {
+        free(ls);
+        exit(1);
+    }
+
+    struct dirent *entry;
+    entry = readdir(dir);
+    while (entry)
+    {
+        if (ft_strncmp(entry->d_name, ".", 1) == 0)
+        {
+            entry = readdir(dir);
+            continue ;
+        }
+        t_list *new = ft_lstnew(entry->d_name);
+        if (!new)
+        {
+            closedir(dir);
+            ls_exit(*ls, 1, "Memory allocation failed");
+        }
+        ft_lstadd_back((void *)&(*ls)->dirs, new);
+
+        entry = readdir(dir);
+    }
+
+    closedir(dir);
+
+    t_list *tmp = (*ls)->dirs;
+    while (tmp)
+    {
+        ft_printf("%s\t", (char *)tmp->content);
+        tmp = tmp->next;
+    }
+    ft_printf("\n");
 }
