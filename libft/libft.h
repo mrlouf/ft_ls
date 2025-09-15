@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:20:08 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:00:30 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 10:20:08 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		ft_lstclear(t_list **lst, void (*del)(void*));
 void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void		ft_list_sort(t_list **lst, int (*)(struct s_list *, struct s_list *));
+void		ft_list_reverse(t_list **lst, int (*)(struct s_list *, struct s_list *));
 int			ft_lst_cmp(t_list *first, t_list *second);
 
 // FT_PRINTF

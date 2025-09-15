@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:00:20 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 10:22:05 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@ void    ls_get_dirs(t_ls **ls)
 
     closedir(dir);
 
-	ft_list_sort(&(*ls)->dirs, &ft_lst_cmp);
+	if ((*ls)->flag_reverse)
+		ft_list_reverse(&(*ls)->dirs, &ft_lst_cmp);
+	else
+		ft_list_sort(&(*ls)->dirs, &ft_lst_cmp);
+
 
     t_list *tmp = (*ls)->dirs;
     while (tmp)

@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:02:14 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 09:41:02 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 10:21:44 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void    ls_print_dir(DIR *dir)
             entry = readdir(dir);
             continue ;
         }
-            ft_printf("%s  ", entry->d_name);
+        ft_printf("%s  ", entry->d_name);
         entry = readdir(dir);
     }
 }
