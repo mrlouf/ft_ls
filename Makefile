@@ -34,7 +34,7 @@ MAKE		=	Makefile
 # -=-=-=-=-    NAME -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= #
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -pedantic -g
+CFLAGS		= -Wall -Wextra -Werror -pedantic -g #-fsanitize=address
 INCLUDES	= -I./
 
 # -=-=-=-=-    TARGETS -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- #

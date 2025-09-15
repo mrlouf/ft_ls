@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 15:25:00 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:23:42 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ In the glibc implementation, the dirent structure is defined as follows:
 typedef struct s_ls
 {
     char                **args;
-	struct s_list		*filenames;
+	struct s_list		*files;
+	int					file_size;
 
     // Flags
     int                 flag_all; // -a
@@ -49,6 +50,7 @@ typedef struct s_ls
 // Function prototypes
 void    ls_parse_options(t_ls *ls);
 void    ls_get_dirs(t_ls *ls);
+void	ls_get_single(t_ls *ls);
 
 void    ls_print_dir(DIR *dir);
 
