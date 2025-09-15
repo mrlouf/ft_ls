@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_list_cmp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/13 12:02:14 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 09:41:02 by nponchon         ###   ########.fr       */
+/*   Created: 2025/09/15 09:56:16 by nponchon          #+#    #+#             */
+/*   Updated: 2025/09/15 10:11:11 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/ft_ls.h"
+# include "./libft.h"
 
-void    ls_print_dir(DIR *dir)
+int	ft_lst_cmp(t_list *first, t_list *second)
 {
-    struct dirent *entry;
-    entry = readdir(dir);
-    while (entry)
-    {
-        if (ft_strncmp(entry->d_name, ".", 1) == 0)
-        {
-            entry = readdir(dir);
-            continue ;
-        }
-            ft_printf("%s  ", entry->d_name);
-        entry = readdir(dir);
-    }
+	return (strcmp((char *)first->content, (char *)second->content));
 }
