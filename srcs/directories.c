@@ -6,13 +6,13 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:22:05 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:27:57 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_ls.h"
 
-void    ls_get_dirs(t_ls **ls)
+void    ls_get_dirs(t_ls *ls)
 {
 /*     if ((*ls)->args == NULL)
         ls_get_current_dir(ls); */
@@ -37,22 +37,22 @@ void    ls_get_dirs(t_ls **ls)
         if (!new)
         {
             closedir(dir);
-            ls_exit(*ls, 1, "Memory allocation failed");
+            ls_exit(ls, 1, "Memory allocation failed");
         }
-        ft_lstadd_back((void *)&(*ls)->dirs, new);
+        ft_lstadd_back((void *)&ls->dirs, new);
 
         entry = readdir(dir);
     }
 
     closedir(dir);
 
-	if ((*ls)->flag_reverse)
-		ft_list_reverse(&(*ls)->dirs, &ft_lst_cmp);
+	if (ls->flag_reverse)
+		ft_list_reverse(&ls->dirs, &ft_lst_cmp);
 	else
-		ft_list_sort(&(*ls)->dirs, &ft_lst_cmp);
+		ft_list_sort(&ls->dirs, &ft_lst_cmp);
 
 
-    t_list *tmp = (*ls)->dirs;
+    t_list *tmp = ls->dirs;
     while (tmp)
     {
         ft_printf("%s  ", (char *)tmp->content);

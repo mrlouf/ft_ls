@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:36:25 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:24:30 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void ls_init(t_ls **ls, char **av)
 {
     (*ls)->args = ++av;
+	(*ls)->filenames = NULL;
 
     // Initialize flags to 0
     (*ls)->flag_all = 0;
@@ -36,11 +37,10 @@ int main(int ac, char **av)
         ls_exit(ls, 1, "Memory allocation failed");
 
     ls_init(&ls, av);
-    ls_parse_options(&ls);
+	if ((*ls->args) != NULL) // parse if arguments provided
+	    ls_parse_options(&ls);
 
     ls_get_dirs(&ls);
 
-    free(ls);
-
-    return (0);
+	ls_exit(ls, 0, NULL);
 }
