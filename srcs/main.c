@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:22:15 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 10:36:25 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void ls_init(t_ls **ls, char **av)
     // Initialize flags to 0
     (*ls)->flag_all = 0;
     (*ls)->flag_list = 0;
-    (*ls)->flag_reverse = 1;
+    (*ls)->flag_reverse = 0;
     (*ls)->flag_recursive = 0;
     (*ls)->flag_time = 0;
 

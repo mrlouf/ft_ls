@@ -41,7 +41,7 @@ INCLUDES	= -I./
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJS) $(HEADERS) $(SRCS) $(MAKE)
+$(NAME): $(LIBFT) $(OBJS) $(HEADERS) $(SRCS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
 
 ${LIBFT}:
