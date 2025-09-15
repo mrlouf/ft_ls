@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 18:23:42 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/15 18:59:55 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_ls
 void    ls_parse_options(t_ls *ls);
 void    ls_get_dirs(t_ls *ls);
 void	ls_get_single(t_ls *ls);
+void	ls_get_multiples(t_ls *ls);
 
 void    ls_print_dir(DIR *dir);
 
