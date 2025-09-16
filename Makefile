@@ -45,9 +45,9 @@ $(NAME): $(LIBFT) $(OBJS) $(HEADERS) $(SRCS)
 	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
 
 ${LIBFT}:
-	make -C ./libft
+	@make -C ./libft
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c Makefile
+$(OBJDIR)/%.o: $(SRCDIR)/%.c $(LIBFT) Makefile
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) $(INCLUDES) -MT $@ -MMD -MP -c $< -o $@
 	@mkdir -p $(DEPDIR)
@@ -63,4 +63,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY:  all clean fclean re
+.PHONY:  all clean fclean re ${LIBFT}

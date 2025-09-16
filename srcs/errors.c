@@ -14,7 +14,14 @@
 
 static void	free_all(t_ls *ls)
 {
-	(void)ls;
+	if (ls->args)
+		free_array((void **)ls->args);
+	if (ls->files)
+		ft_lstclear(&ls->files, &free);
+	if (ls->dirs)
+		ft_lstclear(&ls->dirs, &free);
+	if (ls)
+		free(ls);
 	return ;
 }
 
