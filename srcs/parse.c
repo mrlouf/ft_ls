@@ -56,5 +56,22 @@ void    ls_parse_options(t_ls *ls)
 			}
 		}
 	}
-    
+
+	ls->dir_entries = malloc(sizeof(t_dir_entries) * (ls->file_size + 1));
+	if (!ls->dir_entries)
+		ls_exit(ls, 1, "Memory allocation failed");
+	ls->dir_entries[ls->file_size].dirname = NULL; // Mark the end of the array
+	ls->dir_entries[ls->file_size].entries = NULL;
+
+	if (ls->file_size == 0) {
+		char *current_dir = ft_strdup(".");
+		if (!current_dir)
+			ls_exit(ls, 1, "Memory allocation failed");
+		ft_lstadd_back(&ls->files, ft_lstnew(current_dir));
+		ls->file_size = 1;
+	}
+
+	/*     ft_printf("Flags set: a=%d, l=%d, r=%d, R=%d, t=%d\n",
+		ls->flag_all, ls->flag_list, ls->flag_reverse,
+		ls->flag_recursive, ls->flag_time); // DEBUG: print flags */
 }

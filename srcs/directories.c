@@ -24,17 +24,22 @@ static void	ls_sort_directories(t_ls *ls)
 
 void	ls_get_single(t_ls *ls)
 {
-	char *path = ".";
-	if (ls->file_size == 1)
-		path = ls->files->content;
-	ft_printf("%s\n", path);
-
-	DIR *dir = opendir(path);
+	DIR *dir = opendir(ls->files->content);
 	if (!dir)
 		ls_exit(ls, 1, "Cannot open directory");
 
+	t_list *current = NULL;
+	ls->dir_entries[0].dirname = ft_strdup(ls->files->content);
+	if (!ls->dir_entries[0].dirname)
+	{
+		closedir(dir);
+		ls_exit(ls, 1, "Memory allocation failed");
+	}
+	ls->dir_entries[0].entries = NULL;
+
 	struct dirent *entry;
 	entry = readdir(dir);
+
 	while (entry)
 	{
 		if (ft_strncmp(entry->d_name, ".", 1) == 0)
@@ -48,26 +53,38 @@ void	ls_get_single(t_ls *ls)
 			closedir(dir);
 			ls_exit(ls, 1, "Memory allocation failed");
 		}
-		ft_lstadd_back((void *)&ls->dirs, new);
+		ft_lstadd_back((void *)&current, new);
+		ls->dir_entries[0].entries = current;
 
 		entry = readdir(dir);
 	}
-
 	closedir(dir);
+
 	return ;
 }
 
 void	ls_get_multiples(t_ls *ls)
 {
 	t_list *head = ls->files;
-	while (head) {
+	t_list *current = NULL;
+	int		i = 0;
 
-		DIR *dir = opendir(ls->files->content);
+	while (head) {
+		DIR *dir = opendir(head->content);
 		if (!dir)
 			ls_exit(ls, 1, "Cannot open directory");
 
 		struct dirent *entry;
 		entry = readdir(dir);
+
+		ls->dir_entries[i].dirname = ft_strdup(head->content);
+		if (!ls->dir_entries[i].dirname)
+		{
+			closedir(dir);
+			ls_exit(ls, 1, "Memory allocation failed");
+		}
+		ls->dir_entries[i].entries = NULL;
+
 		while (entry)
 		{
 			if (ft_strncmp(entry->d_name, ".", 1) == 0)
@@ -81,22 +98,27 @@ void	ls_get_multiples(t_ls *ls)
 				closedir(dir);
 				ls_exit(ls, 1, "Memory allocation failed");
 			}
-			ft_lstadd_back((void *)&ls->dirs, new);
+			ft_lstadd_back((void *)&current, new);
 
 			entry = readdir(dir);
 		}
 
+		ls->dir_entries[i].entries = current;
+		current = NULL;
+		i++;
 		closedir(dir);
+
+
 		head = head->next;
 	}
 }
 
 void    ls_get_dirs(t_ls *ls)
 {
-	if (ls->file_size > 1)
-		ls_get_multiples(ls);
-	else
+	if (ls->file_size == 1)
 		ls_get_single(ls);
+	else
+		ls_get_multiples(ls);
 
 	ls_sort_directories(ls);
 }

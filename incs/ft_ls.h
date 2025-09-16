@@ -31,11 +31,17 @@ In the glibc implementation, the dirent structure is defined as follows:
     };
 */
 
+typedef struct s_dir_entries {
+    char    *dirname;
+    t_list  *entries; // list of entry names (or dirent pointers)
+}                       t_dir_entries;
+
 typedef struct s_ls
 {
-    char                **args;
-	struct s_list		*files;
-	int					file_size;
+    char                    **args;
+	struct s_list		    *files;
+	int					    file_size;
+    struct s_dir_entries    *dir_entries; // Array of directory entries
 
     // Flags
     int                 flag_all; // -a
@@ -46,6 +52,8 @@ typedef struct s_ls
 
     struct s_list       *dirs;  // Store all directories to display
 }                       t_ls;
+
+
 
 // Function prototypes
 void    ls_parse_options(t_ls *ls);

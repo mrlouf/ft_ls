@@ -43,11 +43,20 @@ int main(int ac, char **av)
 
     ls_get_dirs(ls);
 
-	t_list *tmp = ls->dirs;
-    while (tmp)
+	int i = 0;
+    while (i < ls->file_size)
     {
-        ft_printf("%s  ", (char *)tmp->content);
-        tmp = tmp->next;
+        if (ls->file_size > 1)
+            ft_printf("%s:\n", ls->dir_entries[i].dirname);
+        t_list *tmp = ls->dir_entries[i].entries;
+        while (tmp)
+        {
+            ft_printf("%s  ", (char *)tmp->content);
+            tmp = tmp->next;
+        }
+        if (ls->file_size > 1 && i < ls->file_size - 1)
+            ft_printf("\n\n");
+        i++;
     }
     ft_printf("\n");
 
