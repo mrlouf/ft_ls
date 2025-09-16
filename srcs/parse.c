@@ -6,31 +6,81 @@
 /*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/16 13:41:08 by nicolas          ###   ########.fr       */
+/*   Updated: 2025/09/16 18:19:14 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incs/ft_ls.h"
 
-void    get_recursive_dirs(t_ls *ls)
+int		count_recursive_dirs(const char *path, t_ls *ls)
 {
-	t_list *head = ls->files;
-	t_list *current = NULL;
+	ft_printf("Checking directory: %s\n", path); // DEBUG
 
+	DIR *dir = opendir(path);
+	if (!dir) {
+		perror("ft_ls: cannot open directory2");
+		ft_printf("Cannot open directory: %s\n", path); // DEBUG
+		return (0);
+	}
+
+	int count = 1;
+
+	struct dirent *entry;
+	entry = readdir(dir);
+	while (entry) {
+		
+		if (entry->d_name[0] == '.') {
+			entry = readdir(dir);
+			continue;
+		}
+
+		if (entry->d_type == DT_DIR) {
+			char full_path[PATH_MAX];	// store the entire path, not just the name
+            snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+			count += count_recursive_dirs(full_path, ls);
+		}
+		
+		entry = readdir(dir);
+	}
+	closedir(dir);
+	return (count);
+}
+
+void	get_recursive_dirs(t_ls *ls)
+{
+	t_list	*head = ls->files;
+	t_list	*current = NULL;
+	int		total_count = 0;
+	
 	while (head)
 	{
 		DIR *dir = opendir(head->content);
 		if (!dir) {
-			ls_perror(ls, 1, "ft_ls: cannot open directory");
+			ls_perror(ls, 1, "ft_ls: cannot open directory1");
 			head = head->next;
-			continue ;
+			continue;
 		}
-		ft_lstadd_back(&current, ft_lstnew(ft_strdup(head->content)));
 		closedir(dir);
+	
+		total_count = count_recursive_dirs(head->content, ls);
 		head = head->next;
 	}
-	ls->dirs = current;
-	return ;
+
+	ft_printf("Total directories to process recursively: %d\n", total_count); // DEBUG
+
+	ls->dir_entries = malloc(sizeof(t_dir_entries) * (total_count + 1));
+	if (!ls->dir_entries)
+		ls_exit(ls, 1, "Memory allocation failed");
+	
+	// Mark the end of the array
+	ls->dir_entries[total_count].dirname = NULL;
+	ls->dir_entries[total_count].entries = NULL;
+
+	// TODO: populate the directories list
+	(void)current;
+	// populate_recursive_dirs(ls);
+
+	return;
 }
 
 void    ls_parse_options(t_ls *ls)

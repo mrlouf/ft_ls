@@ -6,7 +6,7 @@
 /*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/16 13:40:05 by nicolas          ###   ########.fr       */
+/*   Updated: 2025/09/16 17:52:22 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,20 @@
 
 static void ls_init(t_ls *ls, char **av)
 {
-    ls->args = ++av;
-	ls->files = NULL;
+    // If no arguments, default to current directory
+    ls->files = (t_list *)malloc(sizeof(t_list));
+    if (!ls->files) {
+        ls_exit(ls, 1, "Memory allocation failed");
+    }
+    ls->files->next = NULL;
+    ls->files->content = ft_strdup(".");
+    if (!ls->files->content) {
+        free(ls->files);
+        ls_exit(ls, 1, "Memory allocation failed");
+    }
+
+    ls->args = av + 1;
+    
 	ls->file_size = 0;
     ls->dir_entries = NULL;
 
