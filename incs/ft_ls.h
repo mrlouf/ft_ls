@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 18:59:55 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/16 13:35:40 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ void    ls_get_dirs(t_ls *ls);
 void	ls_get_single(t_ls *ls);
 void	ls_get_multiples(t_ls *ls);
 
+void    ls_sort_entries(t_ls *ls);
+
 void    ls_print_dir(DIR *dir);
+void	display_help(t_ls *ls);
+void    ls_print_final(t_ls *ls);
 
 void    ls_exit(t_ls *ls, int code, char *message);
 void	ls_perror(t_ls *ls, int code, char *message);

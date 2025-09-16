@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   directories.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 18:21:14 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/16 13:23:41 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/ft_ls.h"
-
-static void	ls_sort_directories(t_ls *ls)
-{
-	if (ls->flag_reverse)
-		ft_list_reverse(&ls->dirs, &ft_lst_cmp);
-	else
-		ft_list_sort(&ls->dirs, &ft_lst_cmp);
-
-	return ;
-}
 
 void	ls_get_single(t_ls *ls)
 {
@@ -109,7 +99,6 @@ void	ls_get_multiples(t_ls *ls)
 		i++;
 		closedir(dir);
 
-
 		head = head->next;
 	}
 }
@@ -121,5 +110,6 @@ void    ls_get_dirs(t_ls *ls)
 	else
 		ls_get_multiples(ls);
 
-	ls_sort_directories(ls);
+
+	return ;
 }

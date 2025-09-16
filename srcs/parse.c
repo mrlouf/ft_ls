@@ -3,36 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 18:12:00 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/16 13:41:08 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./incs/ft_ls.h"
 
-static void	display_help(t_ls *ls)
+void    get_recursive_dirs(t_ls *ls)
 {
-	ft_printf("Usage: ./ft_ls [OPTION]... [FILE]...\n\
-List information about the FILEs (the current directory by default).\n\
-\n\
-Available options:\n\
-	-a		do not ignore entries starting with .\n\
-	-l		use a long listing format\n\
-	-r		reverse order while sorting\n\
-	-R		list subdirectories recursively\n\
-	-t		sort by time, newest first\n\
-\n\
-	--help	display this help and exit\n");
-	ls_exit(ls, 0, NULL);
+	t_list *head = ls->files;
+	t_list *current = NULL;
+
+	while (head)
+	{
+		DIR *dir = opendir(head->content);
+		if (!dir) {
+			ls_perror(ls, 1, "ft_ls: cannot open directory");
+			head = head->next;
+			continue ;
+		}
+		ft_lstadd_back(&current, ft_lstnew(ft_strdup(head->content)));
+		closedir(dir);
+		head = head->next;
+	}
+	ls->dirs = current;
+	return ;
 }
 
 void    ls_parse_options(t_ls *ls)
 {
-	int i = -1, j = 0;
+	int i = 0, j = 0;
 
-	while (ls->args[++i]) {
+	while (ls->args[i]) {
 		if (ft_strcmp(ls->args[i], "--help") == 0) {
 			display_help(ls);
 		} else if (ls->args[i][0] != '-') {
@@ -54,7 +59,15 @@ void    ls_parse_options(t_ls *ls)
 				else if (ls->args[i][j] == 't')
 					ls->flag_time = 1;
 			}
+			j = 0;
 		}
+		i++;
+	}
+
+	if (ls->flag_recursive)
+	{
+		get_recursive_dirs(ls);
+		return ;
 	}
 
 	ls->dir_entries = malloc(sizeof(t_dir_entries) * (ls->file_size + 1));

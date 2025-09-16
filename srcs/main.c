@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 18:21:51 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/16 13:40:05 by nicolas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void ls_init(t_ls *ls, char **av)
     ls->args = ++av;
 	ls->files = NULL;
 	ls->file_size = 0;
+    ls->dir_entries = NULL;
 
     // Initialize flags to 0
     ls->flag_all = 0;
@@ -42,23 +43,8 @@ int main(int ac, char **av)
 	    ls_parse_options(ls);
 
     ls_get_dirs(ls);
-
-	int i = 0;
-    while (i < ls->file_size)
-    {
-        if (ls->file_size > 1)
-            ft_printf("%s:\n", ls->dir_entries[i].dirname);
-        t_list *tmp = ls->dir_entries[i].entries;
-        while (tmp)
-        {
-            ft_printf("%s  ", (char *)tmp->content);
-            tmp = tmp->next;
-        }
-        if (ls->file_size > 1 && i < ls->file_size - 1)
-            ft_printf("\n\n");
-        i++;
-    }
-    ft_printf("\n");
+	ls_sort_entries(ls);
+    ls_print_final(ls);
 
 	ls_exit(ls, 0, NULL);
 }

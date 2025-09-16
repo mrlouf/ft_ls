@@ -11,8 +11,9 @@ SRC			= 	.
 SRC			=	main.c			\
 				parse.c			\
 				directories.c	\
+				sort.c			\
 				errors.c		\
-				utils.c
+				print.c
 
 SRCDIR		= srcs
 SRCS		= $(addprefix $(SRCDIR)/, $(SRC))
