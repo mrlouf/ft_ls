@@ -25,8 +25,9 @@ static void	ls_sort_directories(t_ls *ls)
 void	ls_get_single(t_ls *ls)
 {
 	DIR *dir = opendir(ls->files->content);
-	if (!dir)
-		ls_exit(ls, 1, "Cannot open directory");
+	if (!dir) {
+		ls_perror(ls, 1, "ft_ls: cannot open directory");
+	}
 
 	t_list *current = NULL;
 	ls->dir_entries[0].dirname = ft_strdup(ls->files->content);
@@ -42,7 +43,7 @@ void	ls_get_single(t_ls *ls)
 
 	while (entry)
 	{
-		if (ft_strncmp(entry->d_name, ".", 1) == 0)
+		if (ft_strncmp(entry->d_name, ".", 1) == 0 && !ls->flag_all)
 		{
 			entry = readdir(dir);
 			continue ;
@@ -72,7 +73,7 @@ void	ls_get_multiples(t_ls *ls)
 	while (head) {
 		DIR *dir = opendir(head->content);
 		if (!dir)
-			ls_exit(ls, 1, "Cannot open directory");
+			perror("Cannot open directory");
 
 		struct dirent *entry;
 		entry = readdir(dir);
@@ -87,7 +88,7 @@ void	ls_get_multiples(t_ls *ls)
 
 		while (entry)
 		{
-			if (ft_strncmp(entry->d_name, ".", 1) == 0)
+			if (ft_strncmp(entry->d_name, ".", 1) == 0 && !ls->flag_all)
 			{
 				entry = readdir(dir);
 				continue ;

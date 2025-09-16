@@ -32,3 +32,11 @@ void    ls_exit(t_ls *ls, int code, char *message)
 		ft_printf("Error: %s\n", message);
     exit(code);
 }
+
+void	ls_perror(t_ls *ls, int code, char *message)
+{
+	if (message)
+		perror(message);
+	free_all(ls);
+	exit(code);
+}

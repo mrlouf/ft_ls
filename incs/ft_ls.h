@@ -64,5 +64,6 @@ void	ls_get_multiples(t_ls *ls);
 void    ls_print_dir(DIR *dir);
 
 void    ls_exit(t_ls *ls, int code, char *message);
+void	ls_perror(t_ls *ls, int code, char *message);
 
 #endif
