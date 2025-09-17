@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/16 18:49:41 by nicolas          ###   ########.fr       */
+/*   Updated: 2025/09/17 08:56:30 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls)
 		return;
 
 	t_list *new_dir = ft_lstnew(ft_strdup(path));
-	ft_lstadd_back(recursive_list, new_dir); // Add to separate list
+	ft_lstadd_back(recursive_list, new_dir);
 
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
@@ -55,7 +55,7 @@ int		count_recursive_dirs(const char *path, t_ls *ls)
 	entry = readdir(dir);
 	while (entry) {
 		
-		if (entry->d_name[0] == '.') {
+		if (entry->d_name[0] == '.' ) {
 			entry = readdir(dir);
 			continue;
 		}
@@ -100,7 +100,6 @@ void	get_recursive_dirs(t_ls *ls)
         head = head->next;
     }
 
-    // Replace ls->files with the recursive list
     ft_lstclear(&ls->files, free);
     ls->files = recursive_list;
     ls->file_size = total_count;
@@ -108,8 +107,7 @@ void	get_recursive_dirs(t_ls *ls)
 	ls->dir_entries = malloc(sizeof(t_dir_entries) * (total_count + 1));
 	if (!ls->dir_entries)
 		ls_exit(ls, 1, "Memory allocation failed");
-	
-	// Mark the end of the array
+
 	ls->dir_entries[total_count].dirname = NULL;
 	ls->dir_entries[total_count].entries = NULL;
 	ls->file_size = total_count;
@@ -157,7 +155,7 @@ void    ls_parse_options(t_ls *ls)
 	ls->dir_entries = malloc(sizeof(t_dir_entries) * (ls->file_size + 1));
 	if (!ls->dir_entries)
 		ls_exit(ls, 1, "Memory allocation failed");
-	ls->dir_entries[ls->file_size].dirname = NULL; // Mark the end of the array
+	ls->dir_entries[ls->file_size].dirname = NULL;
 	ls->dir_entries[ls->file_size].entries = NULL;
 
 	if (ls->file_size == 0) {
