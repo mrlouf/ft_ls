@@ -43,7 +43,7 @@ INCLUDES	= -I./
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJS) $(HEADERS) $(SRCS)
-	@$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(NAME) $(OBJS) $(LIBFT)
 
 ${LIBFT}:
 	@make -C ./libft

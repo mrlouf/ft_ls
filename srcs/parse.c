@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 15:32:39 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 17:09:30 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_vi
 {
 	DIR *dir = opendir(path);
 	if (!dir) {
-		ls_perror(ls, 1, "ft_ls: cannot open directory");
 		return;
 	}
 
@@ -55,18 +54,12 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_vi
 
 	struct stat st;
 	if (lstat(path, &st) == 0 && S_ISDIR(st.st_mode)) {
-		if (already_visited(*visited, st.st_dev, st.st_ino)) {
-			closedir(dir);
-			return ; // already visited, avoid infinite loop
-		}
 		while (entry) {
 			if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
 			{
 				char full_path[PATH_MAX];	// store the entire path, not just the name)
-				if (entry->d_type == DT_DIR) {
-					snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-					collect_recursive_paths(full_path, recursive_list, ls, visited);
-				}
+				snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+				collect_recursive_paths(full_path, recursive_list, ls, visited);
 			}
 			entry = readdir(dir);
 		}
@@ -81,30 +74,19 @@ int		count_recursive_dirs(const char *path, t_ls *ls, t_visited **visited)
 	}
 
 	int count = 1;
-
 	struct dirent *entry;
 	entry = readdir(dir);
 
 	struct stat st;
 	if (lstat(path, &st) == 0 && S_ISDIR(st.st_mode)) {
-		if (!already_visited(*visited, st.st_dev, st.st_ino)) {
-
-			add_visited(visited, st.st_dev, st.st_ino);
-
-			while (entry) {
-				if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
-				{
-					char full_path[PATH_MAX];	// store the entire path, not just the name)
-					if (entry->d_type == DT_DIR) {
-						snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-						count += count_recursive_dirs(full_path, ls, visited);
-					}
-				}
-				entry = readdir(dir);
+		while (entry) {
+			if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
+			{
+				char full_path[PATH_MAX];	// store the entire path, not just the name)
+				snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+				count += count_recursive_dirs(full_path, ls, visited);
 			}
-		} else {
-			closedir(dir);
-			return (0); // already visited, avoid infinite loop
+			entry = readdir(dir);
 		}
 	}
 	closedir(dir);
@@ -117,11 +99,6 @@ void	get_recursive_dirs(t_ls *ls)
 	t_list		*recursive_list = NULL;
 	t_visited	*visited = NULL;
 	int			total_count = 0;
-	
-	visited = malloc(sizeof(t_visited));
-	if (!visited)
-		ls_exit(ls, 1, "Memory allocation failed");
-	visited->next = NULL;
 
 	while (head)
 	{
@@ -132,10 +109,11 @@ void	get_recursive_dirs(t_ls *ls)
 			head = head->next;
 			continue;
 		}
-		closedir(dir);
 
 		total_count = count_recursive_dirs(head->content, ls, &visited) + total_count;
 		head = head->next;
+
+		closedir(dir);
 	}
 
 	ft_printf("Total directories to process recursively: %d\n", total_count); // DEBUG
