@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 14:22:27 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:39:28 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ void	ls_get_single(t_ls *ls)
 {
 	DIR *dir = opendir(ls->files->content);
 	if (!dir) {
-		ls_perror(ls, 1, "ft_ls: cannot open directory");
-		return ;
+		ft_printf("ft_ls: cannot access '%s': ", ls->files->content);
+		perror(NULL);
+		exit(2);
 	}
 
 	t_list *current = NULL;
@@ -90,7 +91,7 @@ void	ls_get_multiples(t_ls *ls)
 				continue ;
 			}
 			t_list *new = ft_lstnew(ft_strdup(entry->d_name));
-			if (!new)
+			if (!new || !new->content)
 			{
 				closedir(dir);
 				ls_exit(ls, 1, "Memory allocation failed");
@@ -104,7 +105,7 @@ void	ls_get_multiples(t_ls *ls)
 		current = NULL;
 		i++;
 		closedir(dir);
-		
+
 		head = head->next;
 	}
 	
@@ -112,8 +113,9 @@ void	ls_get_multiples(t_ls *ls)
 
 void    ls_get_dirs(t_ls *ls)
 {
-	if (ls->file_size == 1)
+	if (ls->file_size == 1) {
 		ls_get_single(ls);
+	}
 	else
 		ls_get_multiples(ls);
 

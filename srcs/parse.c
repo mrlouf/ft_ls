@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 14:01:25 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 15:32:39 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	add_visited(t_visited **visited, dev_t dev, ino_t ino)
 	Collect all paths to collect to later call ls_get_multiples or ls_get_single
 	insteaf of collecing recursively (less complex).
  */
-void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_visited *visited)
+void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_visited **visited)
 {
 	DIR *dir = opendir(path);
 	if (!dir) {
@@ -55,7 +55,7 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_vi
 
 	struct stat st;
 	if (lstat(path, &st) == 0 && S_ISDIR(st.st_mode)) {
-		if (already_visited(visited, st.st_dev, st.st_ino)) {
+		if (already_visited(*visited, st.st_dev, st.st_ino)) {
 			closedir(dir);
 			return ; // already visited, avoid infinite loop
 		}
@@ -73,7 +73,7 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls, t_vi
 	}
 }
 
-int		count_recursive_dirs(const char *path, t_ls *ls, t_visited *visited)
+int		count_recursive_dirs(const char *path, t_ls *ls, t_visited **visited)
 {
 	DIR *dir = opendir(path);
 	if (!dir) {
@@ -87,22 +87,24 @@ int		count_recursive_dirs(const char *path, t_ls *ls, t_visited *visited)
 
 	struct stat st;
 	if (lstat(path, &st) == 0 && S_ISDIR(st.st_mode)) {
-		if (!already_visited(visited, st.st_dev, st.st_ino)) {
-			add_visited(&visited, st.st_dev, st.st_ino);
+		if (!already_visited(*visited, st.st_dev, st.st_ino)) {
+
+			add_visited(visited, st.st_dev, st.st_ino);
+
+			while (entry) {
+				if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
+				{
+					char full_path[PATH_MAX];	// store the entire path, not just the name)
+					if (entry->d_type == DT_DIR) {
+						snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+						count += count_recursive_dirs(full_path, ls, visited);
+					}
+				}
+				entry = readdir(dir);
+			}
 		} else {
 			closedir(dir);
 			return (0); // already visited, avoid infinite loop
-		}
-		while (entry) {
-			if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
-			{
-				char full_path[PATH_MAX];	// store the entire path, not just the name)
-				if (entry->d_type == DT_DIR) {
-					snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-					count += count_recursive_dirs(full_path, ls, visited);
-				}
-			}
-			entry = readdir(dir);
 		}
 	}
 	closedir(dir);
@@ -119,18 +121,20 @@ void	get_recursive_dirs(t_ls *ls)
 	visited = malloc(sizeof(t_visited));
 	if (!visited)
 		ls_exit(ls, 1, "Memory allocation failed");
+	visited->next = NULL;
 
 	while (head)
 	{
 		DIR *dir = opendir(head->content);
 		if (!dir) {
-			ls_perror(ls, 1, "ft_ls: cannot open directory");
+			ft_printf("ft_ls: cannot access '%s': ", head->content);
+			perror(NULL);
 			head = head->next;
 			continue;
 		}
 		closedir(dir);
 
-		total_count = count_recursive_dirs(head->content, ls, visited) + total_count;
+		total_count = count_recursive_dirs(head->content, ls, &visited) + total_count;
 		head = head->next;
 	}
 
@@ -138,9 +142,16 @@ void	get_recursive_dirs(t_ls *ls)
 
 	head = ls->files;
     while (head) {
-        collect_recursive_paths(head->content, &recursive_list, ls, visited);
+        collect_recursive_paths(head->content, &recursive_list, ls, &visited);
         head = head->next;
     }
+
+	// Clean up visited list
+	while (visited) {
+		t_visited *temp = visited;
+		visited = visited->next;
+		free(temp);
+	}
 
     ft_lstclear(&ls->files, free);
     ls->files = recursive_list;
@@ -152,7 +163,6 @@ void	get_recursive_dirs(t_ls *ls)
 
 	ls->dir_entries[total_count].dirname = NULL;
 	ls->dir_entries[total_count].entries = NULL;
-	ls->file_size = total_count;
 
 	return;
 }
@@ -173,7 +183,7 @@ void    ls_parse_options(t_ls *ls)
 			t_list *new = ft_lstnew(filename);
 			if (!new)
 				ls_exit(ls, 1, "Memory allocation failed");
-			ft_lstadd_back(&ls->files, ft_lstnew(filename));
+			ft_lstadd_back(&ls->files, new);
 			ls->file_size++;
 
 		} else {

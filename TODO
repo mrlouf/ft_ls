@@ -1,1 +1,5 @@
-- ft_ls-Makefile should recompile libft if any change happens
+- Handle all the mandatory flags and ensure intercompatibility
+
+- Format the output depending on the flags (bonus = colours), if possible try to use snprintf to put everything into a buffer and then print it all at once rather than call printf multiple times (the less syscalls, the better).
+
+- Final print should wrap dirnames that contain spaces with single quotes (e.g. 'My Folder')
