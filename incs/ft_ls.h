@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ls.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nicolas <nicolas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/16 13:35:40 by nicolas          ###   ########.fr       */
+/*   Updated: 2025/09/17 09:47:16 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ typedef struct s_ls
     struct s_dir_entries    *dir_entries; // Array of directory entries
 
     // Flags
-    int                 flag_all; // -a
-    int                 flag_list; // -l
-    int                 flag_reverse; // -r
-    int                 flag_recursive; // -R
-    int                 flag_time; // -t
+    int                 flag_all;		// -a
+    int                 flag_list;		// -l
+    int                 flag_reverse;	// -r
+    int                 flag_recursive;	// -R
+    int                 flag_time;		// -t
 
     struct s_list       *dirs;  // Store all directories to display
 }                       t_ls;
