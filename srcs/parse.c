@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 10:02:13 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 11:00:45 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls)
 	while ((entry = readdir(dir)) != NULL) {
 		if (entry->d_name[0] == '.' && !ls->flag_all)
 			continue;
-		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0)
+		if (ft_strcmp(entry->d_name, "..") == 0 && !ls->flag_all)
 			continue;
 			
 		if (entry->d_type == DT_DIR) {
-			char full_path[PATH_MAX];
-			snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-			collect_recursive_paths(full_path, recursive_list, ls);
+			if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
+			{
+				char full_path[PATH_MAX];
+				snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+				collect_recursive_paths(full_path, recursive_list, ls);
+			}
 		}
 	}
 	closedir(dir);
@@ -55,15 +58,23 @@ int		count_recursive_dirs(const char *path, t_ls *ls)
 	entry = readdir(dir);
 	while (entry) {
 		
-		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0) {
+		if (entry->d_name[0] == '.' && !ls->flag_all) {
+			entry = readdir(dir);
+			continue;
+		}
+
+ 		if (ft_strcmp(entry->d_name, "..") == 0 && !ls->flag_all) {
 			entry = readdir(dir);
 			continue;
 		}
 
 		if (entry->d_type == DT_DIR) {
-			char full_path[PATH_MAX];	// store the entire path, not just the name
-            snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-			count += count_recursive_dirs(full_path, ls);
+			if (ft_strcmp(entry->d_name, ".") != 0 && ft_strcmp(entry->d_name, "..") != 0)
+			{
+				char full_path[PATH_MAX];	// store the entire path, not just the name
+            	snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
+				count += count_recursive_dirs(full_path, ls);
+			}
 		}
 		
 		entry = readdir(dir);
