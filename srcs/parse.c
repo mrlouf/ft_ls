@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:57:26 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:02:13 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		count_recursive_dirs(const char *path, t_ls *ls)
 	entry = readdir(dir);
 	while (entry) {
 		
-		if (entry->d_name[0] == '.') {
+		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0) {
 			entry = readdir(dir);
 			continue;
 		}

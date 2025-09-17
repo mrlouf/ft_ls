@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:22:22 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:54:28 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 10:04:30 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,14 @@ static void	free_all(t_ls *ls)
 		ft_lstclear(&ls->files, &free);
 	if (ls->dirs)
 		ft_lstclear(&ls->dirs, &free);
-/* 	if (ls->dir_entries)
-		free_array((void **)ls->dir_entries); */
+ 	for (int i = 0; i < ls->file_size; i++) {
+		if (ls->dir_entries[i].dirname)
+			free(ls->dir_entries[i].dirname);
+		if (ls->dir_entries[i].entries)
+			ft_lstclear(&ls->dir_entries[i].entries, &free);
+	}
+	if (ls->dir_entries)
+		free(ls->dir_entries);
 	if (ls)
 		free(ls);
 	return ;
