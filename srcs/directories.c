@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 08:38:09 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 14:22:27 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ls_get_single(t_ls *ls)
 	DIR *dir = opendir(ls->files->content);
 	if (!dir) {
 		ls_perror(ls, 1, "ft_ls: cannot open directory");
+		return ;
 	}
 
 	t_list *current = NULL;
@@ -61,9 +62,14 @@ void	ls_get_multiples(t_ls *ls)
 	int		i = 0;
 
 	while (head) {
+
 		DIR *dir = opendir(head->content);
-		if (!dir)
-			perror("Cannot open directory");
+		if (!dir) {
+			ft_printf("ft_ls: cannot access '%s': ", head->content);
+			perror(NULL);
+			head = head->next;
+			continue ;
+		}
 
 		struct dirent *entry;
 		entry = readdir(dir);
@@ -77,7 +83,7 @@ void	ls_get_multiples(t_ls *ls)
 		ls->dir_entries[i].entries = NULL;
 
 		while (entry)
-		{
+		{			
 			if (ft_strncmp(entry->d_name, ".", 1) == 0 && !ls->flag_all)
 			{
 				entry = readdir(dir);
@@ -98,9 +104,10 @@ void	ls_get_multiples(t_ls *ls)
 		current = NULL;
 		i++;
 		closedir(dir);
-
+		
 		head = head->next;
 	}
+	
 }
 
 void    ls_get_dirs(t_ls *ls)

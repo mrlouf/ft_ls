@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:47:16 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/17 12:41:24 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 // Standard libraries
 # include <dirent.h>
+# include <stdbool.h>
+# include <sys/stat.h>
 
 // Libft (including ft_printf + GNL)
 # include "../libft/libft.h"
@@ -34,7 +36,14 @@ In the glibc implementation, the dirent structure is defined as follows:
 typedef struct s_dir_entries {
     char    *dirname;
     t_list  *entries; // list of entry names (or dirent pointers)
-}                       t_dir_entries;
+}	t_dir_entries;
+
+// structure to keep track of visited directories so as to avoid symlink infinite loops
+typedef struct s_visited {
+    dev_t				dev;
+    ino_t				ino;
+    struct s_visited	*next;
+}	t_visited;
 
 typedef struct s_ls
 {
@@ -44,14 +53,14 @@ typedef struct s_ls
     struct s_dir_entries    *dir_entries; // Array of directory entries
 
     // Flags
-    int                 flag_all;		// -a
-    int                 flag_list;		// -l
-    int                 flag_reverse;	// -r
-    int                 flag_recursive;	// -R
-    int                 flag_time;		// -t
+    bool	flag_all;		// -a
+    bool	flag_list;		// -l
+    bool	flag_reverse;	// -r
+    bool	flag_recursive;	// -R
+    bool	flag_time;		// -t
 
     struct s_list       *dirs;  // Store all directories to display
-}                       t_ls;
+}	t_ls;
 
 
 
