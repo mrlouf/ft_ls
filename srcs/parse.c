@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:57:26 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/26 13:06:52 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,6 @@ int		count_recursive_dirs(const char *path, t_ls *ls)
 	struct dirent *entry;
 	entry = readdir(dir);
 	while (entry) {
-		
-		if (entry->d_name[0] == '.') {
-			entry = readdir(dir);
-			continue;
-		}
 
 		if (entry->d_type == DT_DIR) {
 			char full_path[PATH_MAX];	// store the entire path, not just the name
