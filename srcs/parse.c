@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/26 13:06:52 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/27 13:54:54 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ void collect_recursive_paths(char *path, t_list **recursive_list, t_ls *ls)
 
 	struct dirent *entry;
 	while ((entry = readdir(dir)) != NULL) {
-		if (entry->d_name[0] == '.' && !ls->flag_all)
-			continue;
+
 		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0)
+			continue;
+		if (entry->d_name[0] == '.' && !ls->flag_all)
 			continue;
 			
 		if (entry->d_type == DT_DIR) {
@@ -54,6 +55,14 @@ int		count_recursive_dirs(const char *path, t_ls *ls)
 	struct dirent *entry;
 	entry = readdir(dir);
 	while (entry) {
+		if (ft_strcmp(entry->d_name, ".") == 0 || ft_strcmp(entry->d_name, "..") == 0) {
+			entry = readdir(dir);
+			continue;
+		}
+		if (entry->d_name[0] == '.' && !ls->flag_all) {
+			entry = readdir(dir);
+			continue;
+		}
 
 		if (entry->d_type == DT_DIR) {
 			char full_path[PATH_MAX];	// store the entire path, not just the name
