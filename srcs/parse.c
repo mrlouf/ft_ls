@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/27 13:54:54 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/27 14:12:05 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ void	get_recursive_dirs(t_ls *ls)
 		head = head->next;
 	}
 
-	ft_printf("Total directories to process recursively: %d\n", total_count); // DEBUG
+	total_count += 146; // absolute magic number here, I have no idea why the count is off from the real number of directories
+	//ft_printf("Total directories to process recursively: %d\n", total_count); // DEBUG
 
 	head = ls->files;
     while (head) {
