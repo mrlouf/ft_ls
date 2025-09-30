@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:23:28 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 12:07:36 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:45:25 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int main(int ac, char **av)
 		ls_parse_options(ls);
 
 	ls_get_dirs(ls);
-	//ls_sort_entries(ls);
+	ls_sort_entries(ls);
 	ls_print_final(ls);
 
 	ls_exit(ls, 0, NULL);

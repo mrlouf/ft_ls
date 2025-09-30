@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:47:16 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 17:48:52 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ In the glibc implementation, the dirent structure is defined as follows:
 typedef struct s_dir_entries {
     char    *dirname;
     t_list  *entries; // list of entry names (or dirent pointers)
-}                       t_dir_entries;
+}			t_dir_entries;
 
 typedef struct s_ls
 {
