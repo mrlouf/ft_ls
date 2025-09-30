@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/27 14:01:26 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 11:58:38 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	ls_get_multiples(t_ls *ls)
 
 	while (head) {
 		DIR *dir = opendir(head->content);
+		printf("head->content: %s\n", (char *)head->content);
+
 		if (!dir)
 			perror("Cannot open directory");
 

@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/27 14:12:05 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:04:05 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void    ls_parse_options(t_ls *ls)
 				ls_exit(ls, 1, "Memory allocation failed");
 			ft_lstadd_back(&ls->files, ft_lstnew(filename));
 			ls->file_size++;
+			printf("Added dir: %s\n", filename); // DEBUG
 		} else {
 			while (ls->args[i][++j]) {
 				if (ls->args[i][j] == 'a')
@@ -174,4 +175,11 @@ void    ls_parse_options(t_ls *ls)
 	/*     ft_printf("Flags set: a=%d, l=%d, r=%d, R=%d, t=%d\n",
 		ls->flag_all, ls->flag_list, ls->flag_reverse,
 		ls->flag_recursive, ls->flag_time); // DEBUG: print flags */
+
+	printf("Files to process (%d):\n", ls->file_size); // DEBUG
+	t_list *tmp = ls->files;
+	while (tmp) {
+		printf(" - %s\n", (char *)tmp->content);
+		tmp = tmp->next;
+	}
 }
