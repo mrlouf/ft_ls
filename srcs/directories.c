@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 18:02:10 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 18:18:24 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ void	ls_get_single(t_ls *ls)
 			entry = readdir(dir);
 			continue ;
 		}
-		t_list *new = ft_lstnew(ft_strdup(entry->d_name));
+		char *full_path = ft_strjoin(ls->dir_entries[0].dirname, "/");
+    	full_path = ft_strjoin_free(full_path, entry->d_name);
+
+		t_list *new = ft_lstnew(full_path);
 		if (!new)
 		{
+			free(full_path);
 			closedir(dir);
 			ls_exit(ls, 1, "Memory allocation failed");
 		}

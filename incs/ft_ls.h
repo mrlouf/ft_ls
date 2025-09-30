@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 17:48:52 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 18:25:53 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 // Standard libraries
 # include <dirent.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <time.h>
+# include <pwd.h>
+# include <grp.h>
 
 // Libft (including ft_printf + GNL)
 # include "../libft/libft.h"

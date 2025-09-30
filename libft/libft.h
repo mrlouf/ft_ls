@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 12:20:08 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/15 10:26:50 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 18:17:58 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char		*ft_strdup(char *str);
 
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char *s1, char const *s2);
+char		*ft_strjoin_free(char *s1, char const *s2);
 char		*ft_strtrim(char const *s1, char const *set);
 char		**ft_split(char const *s, char c);
 char		*ft_itoa(int n);
