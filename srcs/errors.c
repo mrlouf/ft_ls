@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:22:22 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/26 13:00:31 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:19:29 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ls_perror(t_ls *ls, int code, char *message)
 {
 	if (message)
 		perror(message);
-	free_all(ls);
+	//free_all(ls);
+	(void)ls;
 	exit(code);
 }

@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 11:58:38 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:17:39 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,15 @@ void	ls_get_multiples(t_ls *ls)
 
 	while (head) {
 		DIR *dir = opendir(head->content);
-		printf("head->content: %s\n", (char *)head->content);
-
-		if (!dir)
+		if (!dir) {
 			perror("Cannot open directory");
+			head = head->next;
+			continue;
+		}
 
 		struct dirent *entry;
 		entry = readdir(dir);
 
-		printf("%d - Processing directory: %s\n", i, (char *)head->content); // DEBUG
 		ls->dir_entries[i].dirname = ft_strdup(head->content);
 		if (!ls->dir_entries[i].dirname)
 		{

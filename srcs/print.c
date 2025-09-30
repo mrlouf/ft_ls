@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:02:14 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/17 09:54:33 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/09/30 12:45:02 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,35 @@ void    ls_print_dir(DIR *dir)
     }
 }
 
+static void	print_long_format(t_ls *ls)
+{
+	int i = 0;
+	while (i < ls->file_size)
+	{
+		if (ls->file_size > 1)
+			ft_printf("%s:\n", ls->dir_entries[i].dirname);
+		t_list *tmp = ls->dir_entries[i].entries;
+		while (tmp)
+		{
+			// Here you would typically gather and print detailed info
+			// For simplicity, we just print the filename
+			ft_printf("%s\n", (char *)tmp->content);
+			tmp = tmp->next;
+		}
+		if (ls->file_size > 1 && i < ls->file_size - 1)
+			ft_printf("\n");
+		i++;
+	}
+	return ;
+}
+
 void    ls_print_final(t_ls *ls)
 {
+	if (ls->flag_list) {
+		print_long_format(ls);
+		return ;
+	}
+
     int i = 0;
     while (i < ls->file_size)
     {
