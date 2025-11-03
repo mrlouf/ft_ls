@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 18:25:53 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:59:19 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <time.h>
 # include <pwd.h>
 # include <grp.h>
+# include <stdbool.h>
 
 // Libft (including ft_printf + GNL)
 # include "../libft/libft.h"
@@ -71,6 +72,7 @@ void    ls_sort_entries(t_ls *ls);
 void    ls_print_dir(DIR *dir);
 void	display_help(t_ls *ls);
 void    ls_print_final(t_ls *ls);
+bool	contains_whitespace(const char *str);
 
 void    ls_exit(t_ls *ls, int code, char *message);
 void	ls_perror(t_ls *ls, int code, char *message);

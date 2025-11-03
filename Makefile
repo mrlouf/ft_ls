@@ -13,7 +13,8 @@ SRC			=	main.c			\
 				directories.c	\
 				sort.c			\
 				errors.c		\
-				print.c
+				print.c			\
+				utils.c
 
 SRCDIR		= srcs
 SRCS		= $(addprefix $(SRCDIR)/, $(SRC))

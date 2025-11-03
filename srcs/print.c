@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:02:14 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 18:30:02 by nponchon         ###   ########.fr       */
+/*   Updated: 2025/11/03 12:56:15 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,12 @@ void    ls_print_final(t_ls *ls)
     int i = 0;
     while (i < ls->file_size)
     {
-        if (ls->file_size > 1)
-            ft_printf("%s:\n", ls->dir_entries[i].dirname);
+        if (ls->file_size > 1) {
+			if (contains_whitespace(ls->dir_entries[i].dirname) == true)
+				ft_printf("\'%s\':\n", ls->dir_entries[i].dirname);
+            else
+				ft_printf("%s:\n", ls->dir_entries[i].dirname);
+		}
         t_list *tmp = ls->dir_entries[i].entries;
         while (tmp)
         {
