@@ -6,11 +6,11 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:21:39 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 12:35:51 by nponchon         ###   ########.fr       */
+/*   Updated: 2026/06/25 15:54:10 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./incs/ft_ls.h"
+#include "./inc/ft_ls.h"
 
 /*
 	Collect all paths to collect to later call ls_get_multiples or ls_get_single

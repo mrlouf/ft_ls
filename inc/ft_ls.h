@@ -6,7 +6,7 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 09:27:26 by nponchon          #+#    #+#             */
-/*   Updated: 2025/11/03 12:59:19 by nponchon         ###   ########.fr       */
+/*   Updated: 2026/06/25 15:52:27 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <stdbool.h>
 
 // Libft (including ft_printf + GNL)
-# include "../libft/libft.h"
+# include "../libft/inc/libft.h"
 
 // Typedefinitions (structures)
 /*        

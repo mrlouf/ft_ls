@@ -6,11 +6,11 @@
 /*   By: nponchon <nponchon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 12:29:25 by nponchon          #+#    #+#             */
-/*   Updated: 2025/09/30 18:18:24 by nponchon         ###   ########.fr       */
+/*   Updated: 2026/06/25 15:53:14 by nponchon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/ft_ls.h"
+#include "../inc/ft_ls.h"
 
 void	ls_get_single(t_ls *ls)
 {

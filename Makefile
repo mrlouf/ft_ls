@@ -16,7 +16,7 @@ SRC			=	main.c			\
 				print.c			\
 				utils.c
 
-SRCDIR		= srcs
+SRCDIR		= src
 SRCS		= $(addprefix $(SRCDIR)/, $(SRC))
 
 OBJDIR		= .obj
